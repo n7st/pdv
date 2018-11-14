@@ -188,7 +188,7 @@ func! pdv#ParseClassData(line)
 	let l:data["name"] = matches[4]
 	let l:data["abstract"] = s:GetAbstract(matches[2])
 	let l:data["final"] = s:GetFinal(matches[2])
-	let l:data["test"] = "Test"
+	let l:data["test"] = matches[4]
 
 	if (!empty(l:matches[5]))
 		call s:ParseExtendsImplements(l:data, l:matches[5])
