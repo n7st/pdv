@@ -178,11 +178,11 @@ func! pdv#ParseClassData(line)
 	let l:data = {}
 	let l:matches = matchlist(l:text, s:regex["class"])
 
-	let l:data["indent"] = matches[1]
-	let l:data["name"] = matches[4]
-	let l:data["abstract"] = s:GetAbstract(matches[2])
-	let l:data["final"] = s:GetFinal(matches[2])
-	let l:data["datestamp"] = strftime("%Y-%m-%d")
+	" let l:data["indent"] = matches[1]
+	" let l:data["name"] = matches[4]
+	" let l:data["abstract"] = s:GetAbstract(matches[2])
+	" let l:data["final"] = s:GetFinal(matches[2])
+	" let l:data["datestamp"] = strftime("%Y-%m-%d")
 
 	if (!empty(l:matches[5]))
 		call s:ParseExtendsImplements(l:data, l:matches[5])
