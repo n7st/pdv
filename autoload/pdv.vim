@@ -201,15 +201,18 @@ func! pdv#ParseNamespaceData(line)
 	let l:text = getline(a:line)
 
 	let l:data = {}
-	let l:matches = matchlist(l:text, s:regex["interface"])
+	let l:matches = matchlist(l:text, s:regex["namespace"])
 
-	let l:data["name"] = matches[1]
+	let l:data["namespace"] = matches[1]
 
 	return l:data
 endfunc
 
 func! pdv#GetNow()
-	return "TEST" " strftime('%Y-%m-%d')
+	let l:data = {}
+	let l:data["datestamp"] = strftime('%Y-%m-%d')
+
+	return l:data
 endfunc
 
 " ^(?<indent>\s*)interface\s+(?<name>\S+)(\s+extends\s+(?<interface>\s+)(\s*,\s*(?<interface>\S+))*)?\s*{?\s*$
