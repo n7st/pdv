@@ -209,7 +209,7 @@ func! pdv#ParseNamespaceData(line)
 endfunc
 
 func! pdv#GetNow()
-	return strftime('%Y-%m-%d')
+	return "TEST" " strftime('%Y-%m-%d')
 endfunc
 
 " ^(?<indent>\s*)interface\s+(?<name>\S+)(\s+extends\s+(?<interface>\s+)(\s*,\s*(?<interface>\S+))*)?\s*{?\s*$
