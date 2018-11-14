@@ -106,12 +106,6 @@ let s:mapping = [
     \ {"regex": s:regex["trait"],
     \  "function": function("pdv#ParseTraitData"),
     \  "template": "trait"},
-    \ {"regex": s:regex["namespace"],
-    \  "function": function("pdv#ParseNamespaceData"),
-    \  "template": "namespace"},
-    \ {"regex": "",
-    \  "function": function("pdv#GetNow"),
-    \  "template": "datestamp"},
 \ ]
 
 func! pdv#DocumentCurrentLine()
@@ -188,30 +182,12 @@ func! pdv#ParseClassData(line)
 	let l:data["name"] = matches[4]
 	let l:data["abstract"] = s:GetAbstract(matches[2])
 	let l:data["final"] = s:GetFinal(matches[2])
-	let l:data["test"] = matches[4]
+	let l:data["datestamp"] = strftime("%Y-%m-%d")
 
 	if (!empty(l:matches[5]))
 		call s:ParseExtendsImplements(l:data, l:matches[5])
 	endif
 	" TODO: abstract? final?
-
-	return l:data
-endfunc
-
-func! pdv#ParseNamespaceData(line)
-	let l:text = getline(a:line)
-
-	let l:data = {}
-	let l:matches = matchlist(l:text, s:regex["namespace"])
-
-	let l:data["namespace"] = matches[1]
-
-	return l:data
-endfunc
-
-func! pdv#GetNow()
-	let l:data = {}
-	let l:data["datestamp"] = strftime('%Y-%m-%d')
 
 	return l:data
 endfunc
