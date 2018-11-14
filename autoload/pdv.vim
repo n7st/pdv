@@ -67,6 +67,8 @@ let s:regex["attribute"] = '^\(\s*\)\(\(private\s*\|public\s*\|protected\s*\|sta
 
 let s:regex["class"] = '^\(\s*\)\(\S*\)\s*\(class\)\s*\(\S\+\)\s*\([^{]*\){\?$'
 
+let s:regex["namespace"] = '^\(namespace\)\s*\(\S\+\)'
+
 " ^(?<indent>\s*)interface\s+(?<name>\S+)(\s+extends\s+(?<interface>\s+)(\s*,\s*(?<interface>\S+))*)?\s*{?\s*$
 " 1:indent, 2:name, 4,6,8,...:extended interfaces
 let s:regex["interface"] = '^\(\s*\)interface\s\+\(\S\+\)\(\s\+extends\s\+\(\S\+\)\(\s*,\s*\(\S\+\)\)*\)\?\s*{\?\s*$'
@@ -104,6 +106,12 @@ let s:mapping = [
     \ {"regex": s:regex["trait"],
     \  "function": function("pdv#ParseTraitData"),
     \  "template": "trait"},
+    \ {"regex": s:regex["namespace"],
+    \  "function": function("pdv#ParseNamespaceData"),
+    \  "template": "namespace"},
+    \ {"regex": "",
+    \  "function": function("pdv#GetNow"),
+    \  "template": "datestamp"},
 \ ]
 
 func! pdv#DocumentCurrentLine()
@@ -187,6 +195,21 @@ func! pdv#ParseClassData(line)
 	" TODO: abstract? final?
 
 	return l:data
+endfunc
+
+func! pdv#ParseNamespaceData(line)
+	let l:text = getline(a:line)
+
+	let l:data = {}
+	let l:matches = matchlist(l:text, s:regex["interface"])
+
+	let l:data["name"] = matches[1]
+
+	return l:data
+endfunc
+
+func! pdv#GetNow()
+	return strftime('%Y-%m-%d')
 endfunc
 
 " ^(?<indent>\s*)interface\s+(?<name>\S+)(\s+extends\s+(?<interface>\s+)(\s*,\s*(?<interface>\S+))*)?\s*{?\s*$
